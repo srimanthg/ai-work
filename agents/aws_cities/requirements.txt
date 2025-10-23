@@ -1,0 +1,4 @@
+langgraph
+langchain_community
+tavily_python
+langchain_aws
