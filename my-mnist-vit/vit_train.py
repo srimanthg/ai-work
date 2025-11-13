@@ -9,7 +9,7 @@ def main():
     batch_size = 16
     img_size = 28
     patch_size = 7
-    lr = 0.01
+    lr = 0.001
 
     # Datasets
     ds_transforms = torchvision.transforms.Compose(
@@ -35,8 +35,8 @@ def main():
     optimizer = torch.optim.Adam(vit.parameters(), lr=lr)
 
     for epoch in range(100):
-        total_images = 0
-        correct_images = 0
+
+        step = 0
         for images, values in train_dl:
             optimizer.zero_grad()
 
@@ -45,14 +45,22 @@ def main():
             loss.backward()
 
             optimizer.step()
+            step += 1
 
             # Accuracy
-            pred_values = pred.argmax(dim=1)
-            correct_images += (pred_values == values).sum()
-            total_images += values.shape[0]
-        print(
-            f"Epoch {epoch}: {correct_images}/{total_images} correct ({100*correct_images/total_images}%)"
-        )
+
+            if step % 100 == 0:
+                with torch.no_grad():
+                    total_images = 0
+                    correct_images = 0
+                    for v_images, v_values in val_dl:
+                        pred_v_values = vit(v_images)
+                        pred_v_values = torch.argmax(pred_v_values, dim=1)
+                        correct_images += (pred_v_values == v_values).sum()
+                        total_images += v_values.shape[0]
+                    print(
+                        f"Epoch {epoch}, Step {step}: {correct_images}/{total_images} correct ({100*correct_images/total_images:0.2f} %)"
+                    )
 
 
 if __name__ == "__main__":

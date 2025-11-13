@@ -8,7 +8,7 @@ class TransformerBlock(torch.nn.Module):
         super().__init__(*args, **kwargs)
         self.layer_norm1 = torch.nn.LayerNorm(embed_dim)
         self.multihead_attn = torch.nn.MultiheadAttention(
-            embed_dim=embed_dim, num_heads=num_attn_heads
+            embed_dim=embed_dim, num_heads=num_attn_heads, batch_first=True
         )
         self.layer_norm2 = torch.nn.LayerNorm(embed_dim)
         self.mlp = torch.nn.Sequential(

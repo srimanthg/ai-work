@@ -8,9 +8,9 @@ class VisionTransformer(torch.nn.Module):
     def __init__(self, num_classes, img_size, patch_size, *args, **kwargs):
         super().__init__(*args, **kwargs)
         num_patches = (img_size // patch_size) * (img_size // patch_size)
-        num_attn_heads = 4
+        num_attn_heads = 8
         num_transformer_blocks = 2
-        embed_dim = 32  # TODO change to 768
+        embed_dim = 768  # TODO change to 768
         num_mlp_hidden_size = 1024  # 768 > 1024 > 10 classes
 
         # Patch embedding (BS, embed_dim, num_patches)
