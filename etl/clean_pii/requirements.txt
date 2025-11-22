@@ -1,0 +1,5 @@
+awscli
+boto3
+click
+ray[data,train,tune,serve]
+python-ffmpeg # Needs ffmpeg installed
