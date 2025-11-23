@@ -20,7 +20,7 @@ def list_files(s3_path: str):
     # Iterate through the objects and print their keys
     if 'Contents' in response:
         for obj in response['Contents']:
-            yield obj['Key']
+            yield f"s3://{s3_bucket}/{obj['Key']}"
 
     # Handle pagination for large buckets
     while response.get('IsTruncated'):
@@ -31,13 +31,12 @@ def list_files(s3_path: str):
         )
         if 'Contents' in response:
             for obj in response['Contents']:
-                yield obj['Key']
+                yield f"s3://{s3_bucket}/{obj['Key']}"
 
 
 def download_file(s3_path: str, local_path: Path):
     s3_bucket, s3_file_path = _parse_s3_path(s3_path)
     s3 = boto3.client('s3')
-    sleep(5)
-    # with open(local_path, 'wb') as f:
-    #     s3.download_fileobj(s3_bucket, s3_file_path, f)
+    with open(local_path, 'wb') as f:
+        s3.download_fileobj(s3_bucket, s3_file_path, f)
     return local_path
