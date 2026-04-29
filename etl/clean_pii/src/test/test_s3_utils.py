@@ -1,6 +1,7 @@
 import unittest
 import s3_utils
 
+
 class Test_S3_Utils(unittest.TestCase):
 
     def test_listing(self):
