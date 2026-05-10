@@ -3,7 +3,6 @@ import torchvision
 
 
 class TransformerBlock(torch.nn.Module):
-
     def __init__(self, embed_dim, num_attn_heads, num_mlp_hidden_size, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.layer_norm1 = torch.nn.LayerNorm(embed_dim)

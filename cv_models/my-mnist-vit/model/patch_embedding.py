@@ -2,7 +2,6 @@ import torch
 
 
 class PatchEmbedding(torch.nn.Module):
-
     def __init__(self, in_channels, num_convs, patch_size, num_patches):
         super().__init__()
         self.patch_size = patch_size
